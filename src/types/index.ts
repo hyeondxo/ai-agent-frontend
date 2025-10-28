@@ -3,7 +3,7 @@
  */
 
 // Common types
-export type { UserMode, Page, PageProps } from './common';
+export type { Page } from './common';
 
 // Dashboard types
 export type {
@@ -12,6 +12,7 @@ export type {
   CostBreakdown,
   RadarDataPoint,
   MetricData,
+  AggregatedMetrics,
 } from './dashboard';
 
 // Prompt types
@@ -47,3 +48,26 @@ export type {
   CodeExample,
   DeploymentMetrics,
 } from './deployment';
+
+// RAG types
+export type {
+  EmbeddingModel,
+  VectorDB,
+  ChunkingStrategy,
+  EmbeddingModelInfo,
+  VectorDBInfo,
+  ChunkingConfig,
+  RetrievalConfig,
+  RAGConfig,
+} from './rag';
+
+// Agent types
+export type {
+  AgentStatus,
+  AgentConfig,
+  AgentMetrics,
+  Agent,
+  CreateAgentInput,
+  AgentTemplate,
+  AgentTemplateConfig,
+} from './agent';

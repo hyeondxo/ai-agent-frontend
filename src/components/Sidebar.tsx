@@ -1,18 +1,12 @@
 import {
   Zap,
-  GraduationCap,
   Settings
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Switch } from './ui/switch';
-import { useUserMode } from '@/contexts/UserModeContext';
-import { NAVIGATION_ITEMS, APP_BRANDING, USER_MODE_LABELS, SETTINGS_MENU } from '@/constants';
+import { NAVIGATION_ITEMS, APP_BRANDING, SETTINGS_MENU } from '@/constants';
 
 export function Sidebar() {
-  const { userMode, setUserMode } = useUserMode();
-
   return (
     <aside className="w-72 bg-black/30 backdrop-blur-xl border-r border-white/10 flex flex-col">
       {/* Logo */}
@@ -24,29 +18,6 @@ export function Sidebar() {
           <div>
             <h1 className="text-white">{APP_BRANDING.name}</h1>
             <p className="text-xs text-white/60">{APP_BRANDING.tagline}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Mode Toggle */}
-      <div className="p-4 border-b border-white/10">
-        <div className="bg-white/5 rounded-lg p-3">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-2">
-              <GraduationCap className="w-4 h-4 text-purple-400" />
-              <span className="text-sm text-white/80">모드</span>
-            </div>
-            <Badge variant={userMode === 'beginner' ? 'default' : 'secondary'} className="text-xs">
-              {USER_MODE_LABELS[userMode]}
-            </Badge>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-white/60">{USER_MODE_LABELS.beginner}</span>
-            <Switch
-              checked={userMode === 'expert'}
-              onCheckedChange={(checked: boolean) => setUserMode(checked ? 'expert' : 'beginner')}
-            />
-            <span className="text-xs text-white/60">{USER_MODE_LABELS.expert}</span>
           </div>
         </div>
       </div>

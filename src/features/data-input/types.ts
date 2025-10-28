@@ -23,7 +23,6 @@ export interface TextInputTabProps {
  * UrlCrawlerTab Props
  */
 export interface UrlCrawlerTabProps {
-  isExpertMode: boolean;
   isAdvancedOpen: boolean;
   onAdvancedOpenChange: (open: boolean) => void;
   onStartCrawling?: (url: string) => void;
@@ -33,7 +32,6 @@ export interface UrlCrawlerTabProps {
  * FileUploadTab Props
  */
 export interface FileUploadTabProps {
-  isExpertMode: boolean;
   uploadProgress: number;
   documentPreview: string;
   onFileUpload?: (files: FileList) => void;
@@ -43,7 +41,6 @@ export interface FileUploadTabProps {
  * DatabaseTab Props
  */
 export interface DatabaseTabProps {
-  isExpertMode: boolean;
   tables: TableInfo[];
   selectedTables: string[];
   onToggleTable: (tableName: string) => void;
@@ -54,5 +51,5 @@ export interface DatabaseTabProps {
  * DataCleansingSection Props
  */
 export interface DataCleansingSectionProps {
-  isExpertMode: boolean;
+  // No props needed - all options visible by default with collapsible advanced settings
 }

@@ -22,10 +22,8 @@ import {
   PerformanceRadarChart,
 } from '@/features/dashboard/components';
 import { PageHeader, ChartCard, AlertCard } from '@/components/common';
-import { useUserMode } from '@/contexts/UserModeContext';
 
 export function DashboardPage() {
-  const { userMode } = useUserMode();
   const {
     performanceData,
     modelComparisonData,
@@ -33,8 +31,6 @@ export function DashboardPage() {
     radarData,
     keyMetrics,
   } = useDashboardData();
-
-  const isExpertMode = useMemo(() => userMode === 'expert', [userMode]);
 
   // Memoize header actions to prevent re-creation on every render
   const headerActions = useMemo(
@@ -142,7 +138,7 @@ export function DashboardPage() {
           description="24시간 실시간 모니터링"
           icon={<Sparkles className="w-5 h-5 text-purple-400" />}
         >
-          <PerformanceChart data={performanceData} showCost={isExpertMode} />
+          <PerformanceChart data={performanceData} showCost={true} />
         </ChartCard>
 
         <ChartCard
@@ -150,30 +146,28 @@ export function DashboardPage() {
           description="종합 벤치마크 결과"
           icon={<TrendingUp className="w-5 h-5 text-blue-400" />}
         >
-          <ModelComparisonChart data={modelComparisonData} showCost={isExpertMode} />
+          <ModelComparisonChart data={modelComparisonData} showCost={true} />
         </ChartCard>
       </div>
 
-      {/* Expert Mode Additional Charts */}
-      {isExpertMode && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <ChartCard
-            title="비용 분석"
-            description="모델별 비용 분포"
-            icon={<DollarSign className="w-5 h-5 text-amber-400" />}
-          >
-            <CostBreakdownChart data={costBreakdownData} />
-          </ChartCard>
+      {/* Additional Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ChartCard
+          title="비용 분석"
+          description="모델별 비용 분포"
+          icon={<DollarSign className="w-5 h-5 text-amber-400" />}
+        >
+          <CostBreakdownChart data={costBreakdownData} />
+        </ChartCard>
 
-          <ChartCard
-            title="종합 성능 프로파일"
-            description="현재 vs 기준선"
-            icon={<Activity className="w-5 h-5 text-green-400" />}
-          >
-            <PerformanceRadarChart data={radarData} />
-          </ChartCard>
-        </div>
-      )}
+        <ChartCard
+          title="종합 성능 프로파일"
+          description="현재 vs 기준선"
+          icon={<Activity className="w-5 h-5 text-green-400" />}
+        >
+          <PerformanceRadarChart data={radarData} />
+        </ChartCard>
+      </div>
 
       {/* Alerts Section */}
       <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-6">
@@ -189,24 +183,20 @@ export function DashboardPage() {
             description="GPT-4 응답 시간이 15% 개선되었습니다."
             timestamp="5분 전"
           />
-          {isExpertMode && (
-            <>
-              <AlertCard
-                type="warning"
-                icon={AlertTriangle}
-                title="비용 임계값 접근"
-                description="예산의 78%를 사용했습니다. Llama-2로 전환을 고려해보세요."
-                timestamp="1시간 전"
-              />
-              <AlertCard
-                type="info"
-                icon={Sparkles}
-                title="프롬프트 최적화 제안"
-                description="Few-shot 예시 추가로 정확도를 5% 더 높일 수 있습니다."
-                timestamp="2시간 전"
-              />
-            </>
-          )}
+          <AlertCard
+            type="warning"
+            icon={AlertTriangle}
+            title="비용 임계값 접근"
+            description="예산의 78%를 사용했습니다. Llama-2로 전환을 고려해보세요."
+            timestamp="1시간 전"
+          />
+          <AlertCard
+            type="info"
+            icon={Sparkles}
+            title="프롬프트 최적화 제안"
+            description="Few-shot 예시 추가로 정확도를 5% 더 높일 수 있습니다."
+            timestamp="2시간 전"
+          />
         </div>
       </Card>
     </div>

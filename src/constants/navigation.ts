@@ -1,6 +1,9 @@
 import {
+  Boxes,
+  TrendingUp,
   LayoutDashboard,
   Database,
+  Layers,
   Wand2,
   BarChart3,
   Rocket,
@@ -20,8 +23,6 @@ export interface NavigationItem {
   icon: LucideIcon;
   /** Optional badge text */
   badge?: string;
-  /** Whether this item requires expert mode */
-  expertOnly?: boolean;
 }
 
 /**
@@ -32,14 +33,24 @@ export interface NavigationItem {
  */
 export const NAVIGATION_ITEMS: NavigationItem[] = [
   {
-    path: ROUTES.DASHBOARD,
-    label: '대시보드',
-    icon: LayoutDashboard,
+    path: ROUTES.AGENTS,
+    label: '에이전트 목록',
+    icon: Boxes,
+  },
+  {
+    path: ROUTES.ANALYTICS,
+    label: '통합 분석',
+    icon: TrendingUp,
   },
   {
     path: ROUTES.DATA_INPUT,
     label: '데이터 입력',
     icon: Database,
+  },
+  {
+    path: ROUTES.RAG_SETTINGS,
+    label: 'RAG 설정',
+    icon: Layers,
   },
   {
     path: ROUTES.PROMPT_STUDIO,
@@ -68,14 +79,6 @@ export const APP_BRANDING = {
   tagline: '빠른 프로토타이핑',
   /** Logo description for accessibility */
   logoAlt: 'AI Agent Lab 로고',
-} as const;
-
-/**
- * User mode labels
- */
-export const USER_MODE_LABELS = {
-  beginner: '초보자',
-  expert: '전문가',
 } as const;
 
 /**

@@ -11,7 +11,6 @@ import { TestResultCardsProps } from '../types';
 
 export function TestResultCards({
   testResults,
-  isExpertMode,
   winnerIndex = 1,
 }: TestResultCardsProps) {
   return (
@@ -53,15 +52,13 @@ export function TestResultCards({
             </div>
 
             {/* Cost Efficiency */}
-            {isExpertMode && (
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs text-white/60">비용 효율</span>
-                  <span className="text-sm text-white">{result.costScore}/100</span>
-                </div>
-                <Progress value={result.costScore} className="h-2" />
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs text-white/60">비용 효율</span>
+                <span className="text-sm text-white">{result.costScore}/100</span>
               </div>
-            )}
+              <Progress value={result.costScore} className="h-2" />
+            </div>
 
             {/* Metrics */}
             <div className="pt-3 border-t border-white/10 space-y-2">

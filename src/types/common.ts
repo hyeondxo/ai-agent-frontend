@@ -3,23 +3,12 @@
  */
 
 /**
- * User expertise mode
- */
-export type UserMode = 'beginner' | 'expert';
-
-/**
  * Page routes in the application
  */
 export type Page =
   | 'dashboard'
   | 'data-input'
+  | 'rag-settings'
   | 'prompt-studio'
   | 'results'
   | 'deployment';
-
-/**
- * Common page component props
- */
-export interface PageProps {
-  userMode: UserMode;
-}

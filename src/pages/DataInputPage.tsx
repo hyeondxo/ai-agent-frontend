@@ -3,12 +3,11 @@
  * 데이터 입력 - 리팩토링 완료
  */
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FileText, Globe, Database, Upload, X, ChevronDown } from 'lucide-react';
-import { useUserMode } from '@/contexts/UserModeContext';
 import { useDataInput } from '@/features/data-input/hooks/useDataInput';
 import {
   TextInputTab,
@@ -19,12 +18,9 @@ import {
 } from '@/features/data-input/components';
 
 export function DataInputPage() {
-  const { userMode } = useUserMode();
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadProgress] = useState(0);
   const [selectedTables, setSelectedTables] = useState<string[]>(['users', 'orders']);
-
-  const isExpertMode = useMemo(() => userMode === 'expert', [userMode]);
 
   // Use custom hook for data
   const { tables, documentPreview } = useDataInput();
@@ -51,7 +47,7 @@ export function DataInputPage() {
         </div>
         <div className="flex items-center gap-3">
           <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-            단계 1/3
+            단계 1/4
           </Badge>
         </div>
       </div>
@@ -83,7 +79,6 @@ export function DataInputPage() {
 
         <TabsContent value="url" className="space-y-4 mt-6">
           <UrlCrawlerTab
-            isExpertMode={isExpertMode}
             isAdvancedOpen={isAdvancedOpen}
             onAdvancedOpenChange={setIsAdvancedOpen}
           />
@@ -91,7 +86,6 @@ export function DataInputPage() {
 
         <TabsContent value="file" className="space-y-4 mt-6">
           <FileUploadTab
-            isExpertMode={isExpertMode}
             uploadProgress={uploadProgress}
             documentPreview={documentPreview}
           />
@@ -99,7 +93,6 @@ export function DataInputPage() {
 
         <TabsContent value="database" className="space-y-4 mt-6">
           <DatabaseTab
-            isExpertMode={isExpertMode}
             tables={tables}
             selectedTables={selectedTables}
             onToggleTable={handleToggleTable}
@@ -108,7 +101,7 @@ export function DataInputPage() {
       </Tabs>
 
       {/* Data Cleansing Section */}
-      <DataCleansingSection isExpertMode={isExpertMode} />
+      <DataCleansingSection />
 
       {/* Action Buttons */}
       <div className="flex items-center justify-between">

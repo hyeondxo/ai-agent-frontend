@@ -4,6 +4,21 @@ import { RootLayout } from '@/layouts/RootLayout';
 import { ROUTES } from '@/constants';
 
 // Lazy load page components for code splitting
+const AgentListPage = lazy(() =>
+  import('@/pages/AgentListPage').then((module) => ({
+    default: module.AgentListPage,
+  }))
+);
+const AgentDashboardPage = lazy(() =>
+  import('@/pages/AgentDashboardPage').then((module) => ({
+    default: module.AgentDashboardPage,
+  }))
+);
+const IntegratedAnalyticsPage = lazy(() =>
+  import('@/pages/IntegratedAnalyticsPage').then((module) => ({
+    default: module.IntegratedAnalyticsPage,
+  }))
+);
 const DashboardPage = lazy(() =>
   import('@/pages/DashboardPage').then((module) => ({
     default: module.DashboardPage,
@@ -12,6 +27,11 @@ const DashboardPage = lazy(() =>
 const DataInputPage = lazy(() =>
   import('@/pages/DataInputPage').then((module) => ({
     default: module.DataInputPage,
+  }))
+);
+const RagSettingsPage = lazy(() =>
+  import('@/pages/RagSettingsPage').then((module) => ({
+    default: module.RagSettingsPage,
   }))
 );
 const PromptStudioPage = lazy(() =>
@@ -51,21 +71,56 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={ROUTES.DASHBOARD} replace />,
+        element: <Navigate to={ROUTES.AGENTS} replace />,
+      },
+      // Agent routes
+      {
+        path: ROUTES.AGENTS.slice(1),
+        element: (
+          <SuspenseWrapper>
+            <AgentListPage />
+          </SuspenseWrapper>
+        ),
       },
       {
-        path: ROUTES.DASHBOARD.slice(1), // Remove leading slash for nested route
+        path: 'agents/:agentId', // Dynamic route for agent dashboard
+        element: (
+          <SuspenseWrapper>
+            <AgentDashboardPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: ROUTES.ANALYTICS.slice(1),
+        element: (
+          <SuspenseWrapper>
+            <IntegratedAnalyticsPage />
+          </SuspenseWrapper>
+        ),
+      },
+      // Legacy dashboard route (kept for backward compatibility)
+      {
+        path: ROUTES.DASHBOARD.slice(1),
         element: (
           <SuspenseWrapper>
             <DashboardPage />
           </SuspenseWrapper>
         ),
       },
+      // Other routes
       {
         path: ROUTES.DATA_INPUT.slice(1),
         element: (
           <SuspenseWrapper>
             <DataInputPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: ROUTES.RAG_SETTINGS.slice(1),
+        element: (
+          <SuspenseWrapper>
+            <RagSettingsPage />
           </SuspenseWrapper>
         ),
       },

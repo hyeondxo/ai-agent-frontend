@@ -70,7 +70,6 @@ export interface WinnerCardProps {
  */
 export interface TestResultCardsProps {
   testResults: TestResult[];
-  isExpertMode: boolean;
   winnerIndex?: number;
 }
 
@@ -78,7 +77,6 @@ export interface TestResultCardsProps {
  * DetailedAnalysisTabs Props
  */
 export interface DetailedAnalysisTabsProps {
-  isExpertMode: boolean;
   comparisonData: ComparisonData[];
   responseExamples: ResponseExample[];
   evaluationMetrics: EvaluationMetric[];

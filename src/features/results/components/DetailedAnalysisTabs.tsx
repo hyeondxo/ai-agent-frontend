@@ -35,7 +35,6 @@ import {
 import { DetailedAnalysisTabsProps } from '../types';
 
 export function DetailedAnalysisTabs({
-  isExpertMode,
   comparisonData,
   responseExamples,
   evaluationMetrics,
@@ -88,14 +87,12 @@ export function DetailedAnalysisTabs({
                   name="v2 (Few-shot)"
                   radius={[8, 8, 0, 0]}
                 />
-                {isExpertMode && (
-                  <Bar
-                    dataKey="claude"
-                    fill="#10b981"
-                    name="Claude-3"
-                    radius={[8, 8, 0, 0]}
-                  />
-                )}
+                <Bar
+                  dataKey="claude"
+                  fill="#10b981"
+                  name="Claude-3"
+                  radius={[8, 8, 0, 0]}
+                />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -122,15 +119,13 @@ export function DetailedAnalysisTabs({
                   fill="#3b82f6"
                   fillOpacity={0.3}
                 />
-                {isExpertMode && (
-                  <Radar
-                    name="Claude"
-                    dataKey="claude"
-                    stroke="#10b981"
-                    fill="#10b981"
-                    fillOpacity={0.2}
-                  />
-                )}
+                <Radar
+                  name="Claude"
+                  dataKey="claude"
+                  stroke="#10b981"
+                  fill="#10b981"
+                  fillOpacity={0.2}
+                />
                 <Legend />
               </RadarChart>
             </ResponsiveContainer>
@@ -251,17 +246,15 @@ export function DetailedAnalysisTabs({
             ))}
           </div>
 
-          {isExpertMode && (
-            <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
-              <h4 className="text-white text-sm mb-3">평가 근거</h4>
-              <div className="space-y-2 text-xs text-white/80">
-                <p>✓ 답변이 질문과 높은 관련성을 보임 (94점)</p>
-                <p>✓ 정확하고 사실에 기반한 정보 제공 (92점)</p>
-                <p>✓ 일관된 톤과 스타일 유지 (90점)</p>
-                <p>⚠ 일부 답변에서 완전성 개선 여지 있음 (88점)</p>
-              </div>
+          <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
+            <h4 className="text-white text-sm mb-3">평가 근거</h4>
+            <div className="space-y-2 text-xs text-white/80">
+              <p>✓ 답변이 질문과 높은 관련성을 보임 (94점)</p>
+              <p>✓ 정확하고 사실에 기반한 정보 제공 (92점)</p>
+              <p>✓ 일관된 톤과 스타일 유지 (90점)</p>
+              <p>⚠ 일부 답변에서 완전성 개선 여지 있음 (88점)</p>
             </div>
-          )}
+          </div>
         </Card>
       </TabsContent>
     </Tabs>

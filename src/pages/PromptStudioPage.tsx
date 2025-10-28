@@ -3,11 +3,10 @@
  * 프롬프트 엔지니어링 스튜디오 - 리팩토링 완료
  */
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Play, Code } from 'lucide-react';
-import { useUserMode } from '@/contexts/UserModeContext';
 import { usePromptTemplates } from '@/features/prompt-studio/hooks/usePromptTemplates';
 import {
   TemplateSelector,
@@ -18,13 +17,10 @@ import {
 } from '@/features/prompt-studio/components';
 
 export function PromptStudioPage() {
-  const { userMode } = useUserMode();
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
   const [temperature, setTemperature] = useState([0.7]);
   const [selectedModels, setSelectedModels] = useState(['gpt-4']);
-
-  const isExpertMode = useMemo(() => userMode === 'expert', [userMode]);
 
   // Use custom hook for data
   const { templates, models, promptHistory } = usePromptTemplates();
@@ -51,7 +47,7 @@ export function PromptStudioPage() {
         </div>
         <div className="flex items-center gap-3">
           <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
-            단계 2/3
+            단계 3/4
           </Badge>
         </div>
       </div>
@@ -80,15 +76,13 @@ export function PromptStudioPage() {
             onToggleModel={handleToggleModel}
           />
 
-          {/* Advanced Settings - Expert Mode Only */}
-          {isExpertMode && (
-            <AdvancedSettings
-              isOpen={isAdvancedOpen}
-              onOpenChange={setIsAdvancedOpen}
-              temperature={temperature}
-              onTemperatureChange={setTemperature}
-            />
-          )}
+          {/* Advanced Settings */}
+          <AdvancedSettings
+            isOpen={isAdvancedOpen}
+            onOpenChange={setIsAdvancedOpen}
+            temperature={temperature}
+            onTemperatureChange={setTemperature}
+          />
 
           {/* Action Buttons */}
           <div className="flex justify-between">

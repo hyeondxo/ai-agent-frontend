@@ -6,7 +6,6 @@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Download, Copy, TrendingUp } from 'lucide-react';
-import { useUserMode } from '@/contexts/UserModeContext';
 import { useTestResults } from '@/features/results/hooks/useTestResults';
 import {
   WinnerCard,
@@ -15,9 +14,6 @@ import {
 } from '@/features/results/components';
 
 export function ResultsValidationPage() {
-  const { userMode } = useUserMode();
-  const isExpertMode = userMode === 'expert';
-
   // Use custom hook for data
   const {
     testResults,
@@ -37,7 +33,7 @@ export function ResultsValidationPage() {
         </div>
         <div className="flex items-center gap-3">
           <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-            단계 3/3
+            단계 4/4
           </Badge>
         </div>
       </div>
@@ -48,13 +44,11 @@ export function ResultsValidationPage() {
       {/* Test Results Comparison */}
       <TestResultCards
         testResults={testResults}
-        isExpertMode={isExpertMode}
         winnerIndex={1}
       />
 
       {/* Detailed Analysis */}
       <DetailedAnalysisTabs
-        isExpertMode={isExpertMode}
         comparisonData={comparisonData}
         responseExamples={responseExamples}
         evaluationMetrics={evaluationMetrics}

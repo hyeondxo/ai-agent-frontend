@@ -12,7 +12,6 @@ import { Database, Search } from 'lucide-react';
 import { DatabaseTabProps } from '../types';
 
 export function DatabaseTab({
-  isExpertMode,
   tables,
   selectedTables,
   onToggleTable,
@@ -64,7 +63,7 @@ export function DatabaseTab({
                 <Checkbox
                   id={table.name}
                   checked={selectedTables.includes(table.name)}
-                  onCheckedChange={(checked) => {
+                  onCheckedChange={() => {
                     onToggleTable(table.name);
                   }}
                 />
@@ -76,11 +75,9 @@ export function DatabaseTab({
                       {table.rows.toLocaleString()} rows
                     </Badge>
                   </div>
-                  {isExpertMode && (
-                    <p className="text-xs text-white/60 mt-1">
-                      {table.columns.join(', ')}
-                    </p>
-                  )}
+                  <p className="text-xs text-white/60 mt-1">
+                    {table.columns.join(', ')}
+                  </p>
                 </div>
               </div>
             </div>
