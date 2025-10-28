@@ -50,28 +50,28 @@ export function FileUploadTab({
           <div className="grid grid-cols-2 gap-3">
             <Button
               variant="outline"
-              className="border-white/10 text-white/80 hover:bg-white/5 justify-start"
+              className="border-white/10 !text-white hover:bg-white/5 hover:!text-white justify-start"
             >
               <FileText className="w-4 h-4 mr-2" />
               텍스트만 추출
             </Button>
             <Button
               variant="outline"
-              className="border-white/10 text-white/80 hover:bg-white/5 justify-start"
+              className="border-white/10 !text-white hover:bg-white/5 hover:!text-white justify-start"
             >
               <Table className="w-4 h-4 mr-2" />
               표(Table)만 추출
             </Button>
             <Button
               variant="outline"
-              className="border-white/10 text-white/80 hover:bg-white/5 justify-start"
+              className="border-white/10 !text-white hover:bg-white/5 hover:!text-white justify-start"
             >
               <ImageIcon className="w-4 h-4 mr-2" />
               이미지 캡션
             </Button>
             <Button
               variant="outline"
-              className="border-white/10 text-white/80 hover:bg-white/5 justify-start"
+              className="border-white/10 !text-white hover:bg-white/5 hover:!text-white justify-start"
             >
               <FileCode className="w-4 h-4 mr-2" />
               메타데이터 포함
@@ -93,14 +93,14 @@ export function FileUploadTab({
             <Button
               size="sm"
               variant="outline"
-              className="border-white/10 text-white/80"
+              className="border-white/10 !text-white hover:!text-white"
             >
               페이지 1-5 선택
             </Button>
             <Button
               size="sm"
               variant="outline"
-              className="border-white/10 text-white/80"
+              className="border-white/10 !text-white hover:!text-white"
             >
               챕터별 분할
             </Button>

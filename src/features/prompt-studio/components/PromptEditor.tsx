@@ -26,7 +26,7 @@ export function PromptEditor({
           <Button
             size="sm"
             variant="outline"
-            className="border-white/10 text-black"
+            className="border-white/10 !text-white hover:!text-white"
             onClick={onCopy}
           >
             <Copy className="w-4 h-4" />
@@ -34,7 +34,7 @@ export function PromptEditor({
           <Button
             size="sm"
             variant="outline"
-            className="border-white/10 text-black"
+            className="border-white/10 !text-white hover:!text-white"
             onClick={onSave}
           >
             <Save className="w-4 h-4" />

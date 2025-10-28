@@ -62,12 +62,12 @@ export function ResultsValidationPage() {
 
       {/* Action Buttons */}
       <div className="flex items-center justify-between">
-        <Button variant="outline" className="border-white/10">
+        <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
           <Download className="w-4 h-4 mr-2" />
           결과 다운로드
         </Button>
         <div className="flex gap-3">
-          <Button variant="outline" className="border-white/10">
+          <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
             <Copy className="w-4 h-4 mr-2" />
             결과 복사
           </Button>

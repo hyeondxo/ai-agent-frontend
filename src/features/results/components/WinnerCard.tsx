@@ -53,14 +53,14 @@ export function WinnerCard({ winner, onShare, onUse }: WinnerCardProps) {
         <div className="flex gap-2">
           <Button
             variant="outline"
-            className="border-white/20 text-white"
+            className="border-white/20 !text-white hover:!text-white"
             onClick={onShare}
           >
             <Share2 className="w-4 h-4 mr-2" />
             공유
           </Button>
           <Button
-            className="bg-gradient-to-r from-purple-500 to-blue-500"
+            className="bg-gradient-to-r from-purple-500 to-blue-500 text-white"
             onClick={onUse}
           >
             <CheckCircle2 className="w-4 h-4 mr-2" />

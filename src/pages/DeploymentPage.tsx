@@ -162,7 +162,7 @@ export function DeploymentPage() {
                   <Button
                     onClick={() => handleCopy(apiEndpoint, 'api')}
                     variant="outline"
-                    className="border-white/10"
+                    className="border-white/10 !text-white hover:!text-white"
                   >
                     <Copy className="w-4 h-4" />
                   </Button>

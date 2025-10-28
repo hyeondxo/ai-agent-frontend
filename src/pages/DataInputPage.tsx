@@ -112,12 +112,12 @@ export function DataInputPage() {
 
       {/* Action Buttons */}
       <div className="flex items-center justify-between">
-        <Button variant="outline" className="border-white/10">
+        <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
           <X className="w-4 h-4 mr-2" />
           취소
         </Button>
         <div className="flex gap-3">
-          <Button variant="outline" className="border-white/10">
+          <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
             임시 저장
           </Button>
           <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">

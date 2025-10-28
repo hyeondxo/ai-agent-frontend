@@ -49,7 +49,7 @@ export function TemplateSelector({
       </div>
       {onAddCustomTemplate && (
         <Button
-          className="w-full mt-4"
+          className="w-full mt-4 !text-white hover:!text-white"
           variant="outline"
           onClick={onAddCustomTemplate}
         >

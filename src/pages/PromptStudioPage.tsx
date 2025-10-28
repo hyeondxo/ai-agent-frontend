@@ -92,12 +92,12 @@ export function PromptStudioPage() {
 
           {/* Action Buttons */}
           <div className="flex justify-between">
-            <Button variant="outline" className="border-white/10">
+            <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
               <Code className="w-4 h-4 mr-2" />
               코드로 보기
             </Button>
             <div className="flex gap-3">
-              <Button variant="outline" className="border-white/10">
+              <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
                 A/B 테스트 설정
               </Button>
               <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
