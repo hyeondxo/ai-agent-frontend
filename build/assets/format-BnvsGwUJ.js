@@ -1,1 +1,0 @@
-function n(t,r="USD",e="ko-KR"){try{return new Intl.NumberFormat(e,{style:"currency",currency:r,minimumFractionDigits:r==="KRW"?0:2,maximumFractionDigits:r==="KRW"?0:2}).format(t)}catch(o){return console.error("Currency formatting error:",o),`${t}`}}function a(t,r=1,e=!0){const o=t.toFixed(r);return e?`${o}%`:o}export{a,n as f};

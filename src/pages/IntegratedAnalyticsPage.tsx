@@ -217,7 +217,7 @@ export function IntegratedAnalyticsPage() {
               <XAxis dataKey="name" {...DEFAULT_AXIS_STYLE} />
               <YAxis {...DEFAULT_AXIS_STYLE} />
               <Tooltip contentStyle={DEFAULT_TOOLTIP_STYLE} />
-              <Bar dataKey="cost" fill="#f59e0b" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="cost" fill="#f59e0b" radius={[8, 8, 0, 0]} barSize={30} />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -263,8 +263,8 @@ export function IntegratedAnalyticsPage() {
             <YAxis {...DEFAULT_AXIS_STYLE} />
             <Tooltip contentStyle={DEFAULT_TOOLTIP_STYLE} />
             <Legend />
-            <Bar dataKey="quality" fill="#8b5cf6" name="품질 점수" radius={[8, 8, 0, 0]} />
-            <Bar dataKey="success" fill="#10b981" name="성공률 (%)" radius={[8, 8, 0, 0]} />
+            <Bar dataKey="quality" fill="#8b5cf6" name="품질 점수" radius={[8, 8, 0, 0]} barSize={25} />
+            <Bar dataKey="success" fill="#10b981" name="성공률 (%)" radius={[8, 8, 0, 0]} barSize={25} />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>

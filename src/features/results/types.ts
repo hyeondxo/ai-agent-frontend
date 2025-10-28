@@ -4,18 +4,32 @@
  */
 
 /**
+ * 테스트 질문과 답변
+ */
+export interface TestQuestion {
+  id: string;
+  question: string;
+  answer: string;
+  rating?: number;
+}
+
+/**
  * 테스트 결과
  */
 export interface TestResult {
   id: string;
   prompt: string;
   model: string;
+  testSetId?: string;
+  promptTemplate?: string;
   qualityScore: number;
   speedScore: number;
   costScore: number;
   avgResponseTime: number;
-  totalCost: string;
+  totalCost: number;
   userSatisfaction: number;
+  overallScore: number;
+  questions?: TestQuestion[];
 }
 
 /**
@@ -57,7 +71,7 @@ export interface EvaluationMetric {
 export interface WinnerCardProps {
   winner: {
     name: string;
-    qualityScore: number;
+    overallScore: number; // Changed from qualityScore to overallScore
     responseTime: number;
     cost: string;
     promptTemplate?: string; // Full prompt template (for Collapsible display)
@@ -71,7 +85,8 @@ export interface WinnerCardProps {
  */
 export interface TestResultCardsProps {
   testResults: TestResult[];
-  winnerIndex?: number;
+  selectedTestId?: string;
+  onSelectTest?: (testId: string) => void;
 }
 
 /**
@@ -81,4 +96,6 @@ export interface DetailedAnalysisTabsProps {
   comparisonData: ComparisonData[];
   responseExamples: ResponseExample[];
   evaluationMetrics: EvaluationMetric[];
+  selectedTest?: TestResult; // Selected test for showing Q&A
+  topThreeTests?: TestResult[]; // Top 3 tests for comparison
 }

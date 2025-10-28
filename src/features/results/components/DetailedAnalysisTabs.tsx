@@ -1,6 +1,6 @@
 /**
  * DetailedAnalysisTabs Component
- * 상세 분석 탭 (비교 분석, 응답 예시, 품질 평가)
+ * 상세 분석 탭 (비교 분석, 응답 결과, 품질 평가)
  */
 
 import { Card } from '@/components/ui/card';
@@ -9,8 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   BarChart3,
-  ThumbsUp,
-  ThumbsDown,
+  MessageSquare,
   Award,
   CheckCircle2,
   AlertTriangle,
@@ -20,11 +19,6 @@ import {
 import {
   BarChart,
   Bar,
-  RadarChart,
-  Radar,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -38,7 +32,43 @@ export function DetailedAnalysisTabs({
   comparisonData,
   responseExamples,
   evaluationMetrics,
+  selectedTest,
+  topThreeTests = [],
 }: DetailedAnalysisTabsProps) {
+  // Prepare comparison data for top 3 tests
+  const top3ComparisonData = [
+    {
+      metric: '정확도',
+      [topThreeTests[0]?.prompt || 'Test 1']: topThreeTests[0]?.qualityScore || 0,
+      [topThreeTests[1]?.prompt || 'Test 2']: topThreeTests[1]?.qualityScore || 0,
+      [topThreeTests[2]?.prompt || 'Test 3']: topThreeTests[2]?.qualityScore || 0,
+    },
+    {
+      metric: '속도',
+      [topThreeTests[0]?.prompt || 'Test 1']: topThreeTests[0]?.speedScore || 0,
+      [topThreeTests[1]?.prompt || 'Test 2']: topThreeTests[1]?.speedScore || 0,
+      [topThreeTests[2]?.prompt || 'Test 3']: topThreeTests[2]?.speedScore || 0,
+    },
+    {
+      metric: '비용효율',
+      [topThreeTests[0]?.prompt || 'Test 1']: topThreeTests[0]?.costScore || 0,
+      [topThreeTests[1]?.prompt || 'Test 2']: topThreeTests[1]?.costScore || 0,
+      [topThreeTests[2]?.prompt || 'Test 3']: topThreeTests[2]?.costScore || 0,
+    },
+  ];
+
+  // Prepare response time comparison data
+  const responseTimeData = topThreeTests.map((test) => ({
+    name: test.prompt || '',
+    '응답시간(초)': test.avgResponseTime || 0,
+  }));
+
+  // Prepare cost comparison data
+  const costComparisonData = topThreeTests.map((test) => ({
+    name: test.prompt || '',
+    '비용($)': test.totalCost || 0,
+  }));
+
   return (
     <Tabs defaultValue="comparison" className="w-full">
       <TabsList className="bg-white/5 border border-white/10 p-1">
@@ -47,8 +77,8 @@ export function DetailedAnalysisTabs({
           비교 분석
         </TabsTrigger>
         <TabsTrigger value="responses" className="data-[state=active]:bg-purple-500/20">
-          <Sparkles className="w-4 h-4 mr-2" />
-          응답 예시
+          <MessageSquare className="w-4 h-4 mr-2" />
+          응답 결과
         </TabsTrigger>
         <TabsTrigger value="evaluation" className="data-[state=active]:bg-purple-500/20">
           <Target className="w-4 h-4 mr-2" />
@@ -58,150 +88,165 @@ export function DetailedAnalysisTabs({
 
       {/* Comparison Tab */}
       <TabsContent value="comparison" className="space-y-6 mt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Bar Chart */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Bar Chart - Top 3 Tests */}
           <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-6">
-            <h3 className="text-white mb-4">성능 지표 비교</h3>
+            <h3 className="text-white mb-4 text-sm">성능 지표 비교 (상위 3개)</h3>
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={comparisonData}>
+              <BarChart data={top3ComparisonData} barSize={20}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-                <XAxis dataKey="metric" stroke="#ffffff60" />
-                <YAxis stroke="#ffffff60" />
+                <XAxis dataKey="metric" stroke="#ffffff60" tick={{ fontSize: 10 }} />
+                <YAxis stroke="#ffffff60" tick={{ fontSize: 10 }} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#1a1a2e',
                     border: '1px solid #ffffff20',
                     borderRadius: '8px',
+                    fontSize: '12px',
                   }}
                 />
-                <Legend />
+                <Legend wrapperStyle={{ fontSize: '10px' }} />
                 <Bar
-                  dataKey="v1"
+                  dataKey={topThreeTests[0]?.prompt || 'Test 1'}
                   fill="#8b5cf6"
-                  name="v1 (Zero-shot)"
                   radius={[8, 8, 0, 0]}
                 />
                 <Bar
-                  dataKey="v2"
+                  dataKey={topThreeTests[1]?.prompt || 'Test 2'}
                   fill="#3b82f6"
-                  name="v2 (Few-shot)"
                   radius={[8, 8, 0, 0]}
                 />
                 <Bar
-                  dataKey="claude"
+                  dataKey={topThreeTests[2]?.prompt || 'Test 3'}
                   fill="#10b981"
-                  name="Claude-3"
                   radius={[8, 8, 0, 0]}
                 />
               </BarChart>
             </ResponsiveContainer>
           </Card>
 
-          {/* Radar Chart */}
+          {/* Response Time Comparison */}
           <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-6">
-            <h3 className="text-white mb-4">종합 성능 프로파일</h3>
+            <h3 className="text-white mb-4 text-sm">응답시간 비교</h3>
             <ResponsiveContainer width="100%" height={300}>
-              <RadarChart data={comparisonData}>
-                <PolarGrid stroke="#ffffff20" />
-                <PolarAngleAxis dataKey="metric" stroke="#ffffff60" />
-                <PolarRadiusAxis stroke="#ffffff40" />
-                <Radar
-                  name="v1"
-                  dataKey="v1"
-                  stroke="#8b5cf6"
-                  fill="#8b5cf6"
-                  fillOpacity={0.2}
+              <BarChart data={responseTimeData} barSize={20}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+                <XAxis
+                  dataKey="name"
+                  stroke="#ffffff60"
+                  tick={{ fontSize: 10 }}
                 />
-                <Radar
-                  name="v2"
-                  dataKey="v2"
-                  stroke="#3b82f6"
-                  fill="#3b82f6"
-                  fillOpacity={0.3}
+                <YAxis stroke="#ffffff60" tick={{ fontSize: 10 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#1a1a2e',
+                    border: '1px solid #ffffff20',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                  }}
                 />
-                <Radar
-                  name="Claude"
-                  dataKey="claude"
-                  stroke="#10b981"
+                <Legend wrapperStyle={{ fontSize: '10px' }} />
+                <Bar
+                  dataKey="응답시간(초)"
                   fill="#10b981"
-                  fillOpacity={0.2}
+                  radius={[8, 8, 0, 0]}
                 />
-                <Legend />
-              </RadarChart>
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+
+          {/* Cost Comparison */}
+          <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-6">
+            <h3 className="text-white mb-4 text-sm">비용 비교</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={costComparisonData} barSize={20}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+                <XAxis
+                  dataKey="name"
+                  stroke="#ffffff60"
+                  tick={{ fontSize: 10 }}
+                />
+                <YAxis stroke="#ffffff60" tick={{ fontSize: 10 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#1a1a2e',
+                    border: '1px solid #ffffff20',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                  }}
+                  formatter={(value: number) => [`$${value.toFixed(2)}`, '비용($)']}
+                />
+                <Legend wrapperStyle={{ fontSize: '10px' }} />
+                <Bar
+                  dataKey="비용($)"
+                  fill="#f59e0b"
+                  radius={[8, 8, 0, 0]}
+                />
+              </BarChart>
             </ResponsiveContainer>
           </Card>
         </div>
       </TabsContent>
 
-      {/* Response Examples Tab */}
+      {/* Response Results Tab */}
       <TabsContent value="responses" className="space-y-4 mt-6">
-        {responseExamples.map((example, index) => (
-          <Card
-            key={index}
-            className="bg-white/5 backdrop-blur-xl border-white/10 p-6"
-          >
-            <div className="mb-4">
-              <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 mb-2">
-                테스트 질문 {index + 1}
+        {selectedTest && selectedTest.questions && selectedTest.questions.length > 0 ? (
+          <>
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-white text-lg">
+                  {selectedTest.prompt} - 응답 결과
+                </h3>
+                <p className="text-sm text-white/60 mt-1">
+                  {selectedTest.questions.length}개의 테스트 질문
+                </p>
+              </div>
+              <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
+                {selectedTest.model}
               </Badge>
-              <p className="text-white">{example.question}</p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {/* Response V1 */}
-              <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-                <div className="flex items-center justify-between mb-3">
-                  <Badge variant="secondary" className="text-xs text-white">
-                    v1 (Zero-shot)
-                  </Badge>
-                  <div className="flex items-center gap-2">
-                    <Button size="sm" variant="ghost" className="h-7 px-2 text-white/80">
-                      <ThumbsUp className="w-3 h-3 mr-1" />
-                      {example.votes.v1}
-                    </Button>
-                    <Button size="sm" variant="ghost" className="h-7 px-2 text-white/80">
-                      <ThumbsDown className="w-3 h-3" />
-                    </Button>
-                  </div>
-                </div>
-                <p className="text-sm text-white/80">{example.responseV1}</p>
-              </div>
-
-              {/* Response V2 */}
-              <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/30">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <Badge className="bg-purple-500/30 text-purple-200 text-xs">
-                      v2 (Few-shot)
+            {selectedTest.questions.map((q, index) => (
+              <Card
+                key={q.id}
+                className="bg-white/5 backdrop-blur-xl border-white/10 p-6"
+              >
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                      질문 {index + 1}
                     </Badge>
-                    <Award className="w-4 h-4 text-amber-400" />
+                    {q.rating && (
+                      <div className="flex items-center gap-1">
+                        <Award className="w-4 h-4 text-amber-400" />
+                        <span className="text-sm text-amber-400">{q.rating}/5.0</span>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button size="sm" variant="ghost" className="h-7 px-2 text-white/80">
-                      <ThumbsUp className="w-3 h-3 mr-1 text-green-400" />
-                      {example.votes.v2}
-                    </Button>
-                    <Button size="sm" variant="ghost" className="h-7 px-2 text-white/80">
-                      <ThumbsDown className="w-3 h-3" />
-                    </Button>
-                  </div>
+                  <p className="text-white font-medium">{q.question}</p>
                 </div>
-                <p className="text-sm text-white/80">{example.responseV2}</p>
-              </div>
+
+                <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-4 h-4 text-purple-400" />
+                    <span className="text-sm text-purple-300 font-medium">AI 응답</span>
+                  </div>
+                  <p className="text-sm text-white/80 leading-relaxed">{q.answer}</p>
+                </div>
+              </Card>
+            ))}
+          </>
+        ) : (
+          <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-12">
+            <div className="text-center">
+              <MessageSquare className="w-12 h-12 text-white/40 mx-auto mb-4" />
+              <h3 className="text-white text-lg mb-2">테스트를 선택해주세요</h3>
+              <p className="text-white/60 text-sm">
+                응답 결과를 보려면 테스트 카드를 클릭하세요
+              </p>
             </div>
           </Card>
-        ))}
-
-        <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-start gap-3">
-          <Sparkles className="w-5 h-5 text-blue-400 mt-0.5" />
-          <div>
-            <p className="text-white text-sm mb-1">집단 평가 결과</p>
-            <p className="text-xs text-white/60">
-              총 100명의 사용자 중 76%가 Few-shot 프롬프트(v2)를 선호했습니다. 더
-              자세하고 친절한 답변이 높은 평가를 받았습니다.
-            </p>
-          </div>
-        </div>
+        )}
       </TabsContent>
 
       {/* Evaluation Tab */}

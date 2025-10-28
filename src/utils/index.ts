@@ -98,3 +98,11 @@ export {
   deleteTestSet,
   resetTestSetCounter,
 } from './testSet';
+
+// Test Results 유틸리티
+export {
+  calculateOverallScore,
+  sortTestsByOverallScore,
+  getTopTests,
+  findWinnerTest,
+} from './testResults';

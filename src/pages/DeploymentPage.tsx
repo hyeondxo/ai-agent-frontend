@@ -319,39 +319,7 @@ export function DeploymentPage() {
       </Tabs>
 
       {/* Usage Statistics */}
-      <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-6">
-        <h3 className="text-white mb-4">사용량 통계 (실시간)</h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-            <div className="flex items-center gap-2 mb-2">
-              <Users className="w-4 h-4 text-purple-400" />
-              <span className="text-sm text-white/60">활성 사용자</span>
-            </div>
-            <p className="text-2xl text-white">324</p>
-          </div>
-          <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-            <div className="flex items-center gap-2 mb-2">
-              <Activity className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-white/60">오늘 요청 수</span>
-            </div>
-            <p className="text-2xl text-white">1,847</p>
-          </div>
-          <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-            <div className="flex items-center gap-2 mb-2">
-              <Clock className="w-4 h-4 text-green-400" />
-              <span className="text-sm text-white/60">평균 응답시간</span>
-            </div>
-            <p className="text-2xl text-white">1.8s</p>
-          </div>
-          <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-            <div className="flex items-center gap-2 mb-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span className="text-sm text-white/60">성공률</span>
-            </div>
-            <p className="text-2xl text-white">99.2%</p>
-          </div>
-        </div>
-      </Card>
+     
     </div>
   );
 }

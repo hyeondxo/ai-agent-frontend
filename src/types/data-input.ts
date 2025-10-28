@@ -41,8 +41,25 @@ export interface CrawlerConfig {
 export interface DatabaseConfig {
   type: 'postgresql' | 'mysql' | 'mongodb' | 'sqlite';
   host: string;
-  port: number;
-  database: string;
   username: string;
   password: string;
+}
+
+/**
+ * Database connection form state
+ */
+export interface DatabaseConnectionForm {
+  type: 'postgresql' | 'mysql' | 'mongodb' | 'sqlite';
+  host: string;
+  username: string;
+  password: string;
+}
+
+/**
+ * Database connection status
+ */
+export interface DatabaseConnectionStatus {
+  isConnected: boolean;
+  isConnecting: boolean;
+  error?: string;
 }

@@ -3,6 +3,16 @@
  */
 
 /**
+ * Test question and answer pair
+ */
+export interface TestQuestion {
+  id: string;
+  question: string;
+  answer: string;
+  rating?: number;
+}
+
+/**
  * Test result data
  */
 export interface TestResult {
@@ -17,6 +27,8 @@ export interface TestResult {
   avgResponseTime: number;
   totalCost: number;
   userSatisfaction: number;
+  overallScore: number; // Average of all scores
+  questions?: TestQuestion[]; // Individual Q&A for this test
 }
 
 /**

@@ -65,11 +65,10 @@ export const mockCrawlerConfig = {
  * Mock database connection config
  */
 export const mockDatabaseConfig = {
-  type: 'PostgreSQL' as const,
-  host: 'localhost:5432',
-  database: '',
-  username: '',
-  password: '',
+  type: 'postgresql' as const,
+  host: 'localhost:5342',
+  username: 'admin',
+  password: 'password123',
 } as const;
 
 /**
