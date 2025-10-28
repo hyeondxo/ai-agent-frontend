@@ -1,41 +1,178 @@
 /**
  * Prompt Studio Page
- * 프롬프트 엔지니어링 스튜디오 - 리팩토링 완료
+ * 프롬프트 엔지니어링 스튜디오 - 다중 세트 관리 시스템
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Play, Code } from 'lucide-react';
+import { Play, Plus } from 'lucide-react';
 import { usePromptTemplates } from '@/features/prompt-studio/hooks/usePromptTemplates';
 import {
   TemplateSelector,
-  PromptHistory,
+  TestSetList,
   PromptEditor,
   ModelSelector,
   AdvancedSettings,
+  PromptSetPagination,
 } from '@/features/prompt-studio/components';
+import type { PromptSet, TestQuestion } from '@/features/prompt-studio/types';
+import type { TestSetResult } from '@/types/prompt';
+import { mockTestSets } from '@/data/mockPrompts';
 
 export function PromptStudioPage() {
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
-  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
-  const [temperature, setTemperature] = useState([0.7]);
-  const [selectedModels, setSelectedModels] = useState(['gpt-4']);
-
   // Use custom hook for data
-  const { templates, models, promptHistory } = usePromptTemplates();
+  const { templates, models } = usePromptTemplates();
 
-  // Memoize event handler to prevent re-creation
+  // Test sets state
+  const [testSets] = useState<TestSetResult[]>(mockTestSets);
+
+  // Multiple prompt sets management
+  const [promptSets, setPromptSets] = useState<PromptSet[]>([
+    {
+      id: `set-${Date.now()}`,
+      templateId: null,
+      promptText: '',
+      questions: [{ id: `question-${Date.now()}`, value: '' }],
+      selectedModels: ['gpt-4'],
+      advancedSettings: {
+        temperature: 0.7,
+        maxTokens: 2000,
+        topP: 0.9,
+      },
+      isAdvancedOpen: false,
+    },
+  ]);
+
+  const [activeSetIndex, setActiveSetIndex] = useState(0);
+
+  // Get current active set
+  const currentSet = promptSets[activeSetIndex];
+
+  // Add new prompt set
+  const handleAddSet = useCallback(() => {
+    const newSet: PromptSet = {
+      id: `set-${Date.now()}`,
+      templateId: null,
+      promptText: '',
+      questions: [{ id: `question-${Date.now()}`, value: '' }],
+      selectedModels: ['gpt-4'],
+      advancedSettings: {
+        temperature: 0.7,
+        maxTokens: 2000,
+        topP: 0.9,
+      },
+      isAdvancedOpen: false,
+    };
+    setPromptSets([...promptSets, newSet]);
+    setActiveSetIndex(promptSets.length);
+  }, [promptSets]);
+
+  // Update current set's property
+  const updateCurrentSet = useCallback(
+    (updates: Partial<PromptSet>) => {
+      setPromptSets((prevSets) =>
+        prevSets.map((set, index) =>
+          index === activeSetIndex ? { ...set, ...updates } : set
+        )
+      );
+    },
+    [activeSetIndex]
+  );
+
+  // Handler for template selection
+  const handleSelectTemplate = useCallback(
+    (templateId: string) => {
+      const template = templates.find((t) => t.id === templateId);
+      updateCurrentSet({
+        templateId,
+        promptText: template?.prompt || '',
+      });
+    },
+    [templates, updateCurrentSet]
+  );
+
+  // Handler for prompt text change
+  const handlePromptTextChange = useCallback(
+    (text: string) => {
+      updateCurrentSet({ promptText: text });
+    },
+    [updateCurrentSet]
+  );
+
+  // Handler for questions change
+  const handleQuestionsChange = useCallback(
+    (questions: TestQuestion[]) => {
+      updateCurrentSet({ questions });
+    },
+    [updateCurrentSet]
+  );
+
+  // Handler for model toggle
   const handleToggleModel = useCallback(
     (modelId: string) => {
-      if (selectedModels.includes(modelId)) {
-        setSelectedModels(selectedModels.filter((m) => m !== modelId));
-      } else {
-        setSelectedModels([...selectedModels, modelId]);
-      }
+      const newSelectedModels = currentSet.selectedModels.includes(modelId)
+        ? currentSet.selectedModels.filter((m) => m !== modelId)
+        : [...currentSet.selectedModels, modelId];
+
+      updateCurrentSet({ selectedModels: newSelectedModels });
     },
-    [selectedModels]
+    [currentSet.selectedModels, updateCurrentSet]
   );
+
+  // Handler for temperature change
+  const handleTemperatureChange = useCallback(
+    (value: number[]) => {
+      updateCurrentSet({
+        advancedSettings: {
+          ...currentSet.advancedSettings,
+          temperature: value[0],
+        },
+      });
+    },
+    [currentSet.advancedSettings, updateCurrentSet]
+  );
+
+  // Handler for advanced settings open/close
+  const handleAdvancedOpenChange = useCallback(
+    (open: boolean) => {
+      updateCurrentSet({ isAdvancedOpen: open });
+    },
+    [updateCurrentSet]
+  );
+
+  // Handler for test set restoration from sessionStorage
+  useEffect(() => {
+    const restoreData = sessionStorage.getItem('restoreTestSet');
+    if (restoreData) {
+      try {
+        const testSet: TestSetResult = JSON.parse(restoreData);
+
+        // Convert test set to prompt set format
+        const restoredSet: PromptSet = {
+          id: `set-${Date.now()}`,
+          templateId: null,
+          promptText: testSet.promptTemplate,
+          questions: testSet.questions,
+          selectedModels: testSet.selectedModels,
+          advancedSettings: testSet.advancedSettings,
+          isAdvancedOpen: false,
+        };
+
+        // Update current set with restored data
+        setPromptSets((prevSets) =>
+          prevSets.map((set, index) =>
+            index === activeSetIndex ? restoredSet : set
+          )
+        );
+
+        // Clear sessionStorage
+        sessionStorage.removeItem('restoreTestSet');
+      } catch (error) {
+        console.error('Failed to restore test set:', error);
+      }
+    }
+  }, [activeSetIndex]);
 
   return (
     <div className="p-8 space-y-6">
@@ -53,46 +190,58 @@ export function PromptStudioPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Panel - Templates & History */}
+        {/* Left Panel - Templates & Test Sets */}
         <div className="space-y-6">
           <TemplateSelector
             templates={templates}
-            selectedTemplate={selectedTemplate}
-            onSelectTemplate={setSelectedTemplate}
+            selectedTemplate={currentSet.templateId}
+            onSelectTemplate={handleSelectTemplate}
           />
-          <PromptHistory history={promptHistory} />
+          <TestSetList testSets={testSets} />
         </div>
 
         {/* Center Panel - Prompt Editor */}
         <div className="lg:col-span-2 space-y-6">
           <PromptEditor
-            selectedTemplate={selectedTemplate}
+            selectedTemplate={currentSet.templateId}
             templates={templates}
+            promptText={currentSet.promptText}
+            questions={currentSet.questions}
+            onPromptTextChange={handlePromptTextChange}
+            onQuestionsChange={handleQuestionsChange}
           />
 
           <ModelSelector
             models={models}
-            selectedModels={selectedModels}
+            selectedModels={currentSet.selectedModels}
             onToggleModel={handleToggleModel}
           />
 
           {/* Advanced Settings */}
           <AdvancedSettings
-            isOpen={isAdvancedOpen}
-            onOpenChange={setIsAdvancedOpen}
-            temperature={temperature}
-            onTemperatureChange={setTemperature}
+            isOpen={currentSet.isAdvancedOpen}
+            onOpenChange={handleAdvancedOpenChange}
+            temperature={[currentSet.advancedSettings.temperature]}
+            onTemperatureChange={handleTemperatureChange}
+          />
+
+          {/* Pagination */}
+          <PromptSetPagination
+            totalSets={promptSets.length}
+            activeIndex={activeSetIndex}
+            onSetChange={setActiveSetIndex}
           />
 
           {/* Action Buttons */}
-          <div className="flex justify-between">
-            <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
-              <Code className="w-4 h-4 mr-2" />
-              코드로 보기
-            </Button>
+          <div className="flex justify-end">
             <div className="flex gap-3">
-              <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
-                A/B 테스트 설정
+              <Button
+                variant="outline"
+                className="border-white/10 !text-white hover:!text-white"
+                onClick={handleAddSet}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                테스트 추가
               </Button>
               <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
                 <Play className="w-4 h-4 mr-2" />

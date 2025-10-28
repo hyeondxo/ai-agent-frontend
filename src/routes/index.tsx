@@ -44,6 +44,11 @@ const PromptHistoryDetailPage = lazy(() =>
     default: module.PromptHistoryDetailPage,
   }))
 );
+const TestSetDetailPage = lazy(() =>
+  import('@/pages/TestSetDetailPage').then((module) => ({
+    default: module.TestSetDetailPage,
+  }))
+);
 const ResultsValidationPage = lazy(() =>
   import('@/pages/ResultsValidationPage').then((module) => ({
     default: module.ResultsValidationPage,
@@ -147,6 +152,14 @@ export const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <PromptHistoryDetailPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: 'prompt-studio/test-set/:testSetId',
+        element: (
+          <SuspenseWrapper>
+            <TestSetDetailPage />
           </SuspenseWrapper>
         ),
       },

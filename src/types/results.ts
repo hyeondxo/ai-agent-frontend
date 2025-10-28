@@ -9,6 +9,8 @@ export interface TestResult {
   id: string;
   prompt: string;
   model: string;
+  testSetId?: string; // Format: TEST-01, TEST-02, ...
+  promptTemplate?: string; // Full prompt template text
   qualityScore: number;
   speedScore: number;
   costScore: number;

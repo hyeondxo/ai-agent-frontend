@@ -2783,3 +2783,14 @@ html {
   inherits: false;
   initial-value: 0;
 }
+
+/* Fix for Radix UI Dialog/Sheet pointer-events issue */
+body[data-scroll-locked] {
+  pointer-events: auto !important;
+}
+
+/* Ensure Sheet overlay and content can receive pointer events */
+[data-slot="sheet-overlay"],
+[data-slot="sheet-content"] {
+  pointer-events: auto !important;
+}
