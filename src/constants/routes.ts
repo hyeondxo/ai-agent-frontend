@@ -41,6 +41,9 @@ export const ROUTES = {
 
   /** Deployment page - API deployment and integration */
   DEPLOYMENT: '/deployment',
+
+  /** Playground page - test agents with chat interface */
+  PLAYGROUND: '/playground',
 } as const;
 
 /**
@@ -71,6 +74,7 @@ export function getRouteLabel(route: RouteValue): string {
     [ROUTES.PROMPT_STUDIO]: '프롬프트 스튜디오',
     [ROUTES.RESULTS]: '결과 & 검증',
     [ROUTES.DEPLOYMENT]: '배포',
+    [ROUTES.PLAYGROUND]: 'Playground',
   };
 
   return labels[route] || '';

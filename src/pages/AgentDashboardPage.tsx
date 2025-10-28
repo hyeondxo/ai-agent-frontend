@@ -68,7 +68,7 @@ export function AgentDashboardPage() {
   const headerActions = useMemo(
     () => (
       <>
-        <Button variant="outline" onClick={() => navigate(ROUTES.AGENTS)} className="gap-2">
+        <Button variant="outline" onClick={() => navigate(ROUTES.AGENTS)} className="gap-2 text-black hover:text-black">
           <ArrowLeft className="w-4 h-4" />
           목록으로
         </Button>

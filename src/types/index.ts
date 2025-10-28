@@ -71,3 +71,6 @@ export type {
   AgentTemplate,
   AgentTemplateConfig,
 } from './agent';
+
+// Playground types
+export type { MessageRole, ChatMessage, ChatSession } from './playground';

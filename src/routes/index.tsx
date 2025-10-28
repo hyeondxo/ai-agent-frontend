@@ -49,6 +49,11 @@ const DeploymentPage = lazy(() =>
     default: module.DeploymentPage,
   }))
 );
+const PlaygroundPage = lazy(() =>
+  import('@/pages/PlaygroundPage').then((module) => ({
+    default: module.PlaygroundPage,
+  }))
+);
 
 // Loading fallback component
 function PageLoader() {
@@ -145,6 +150,14 @@ export const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <DeploymentPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: ROUTES.PLAYGROUND.slice(1),
+        element: (
+          <SuspenseWrapper>
+            <PlaygroundPage />
           </SuspenseWrapper>
         ),
       },

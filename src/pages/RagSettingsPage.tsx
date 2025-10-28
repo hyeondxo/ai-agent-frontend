@@ -125,7 +125,7 @@ export function RagSettingsPage() {
                       <Badge className="bg-green-500/20 text-green-400 text-xs">추천</Badge>
                     )}
                   </div>
-                  <Badge className="bg-blue-500/30 text-blue-200 border border-blue-400/30 text-xs">
+                  <Badge className="bg-blue-500/30 text-white border border-blue-400/30 text-xs">
                     {db.hosting === 'cloud' ? '클라우드' : db.hosting === 'self-hosted' ? '자체호스팅' : '클라우드/자체호스팅'}
                   </Badge>
                 </div>
@@ -136,7 +136,7 @@ export function RagSettingsPage() {
               <p className="text-sm text-white/80 mb-3">{db.description}</p>
               <div className="flex flex-wrap gap-1">
                 {db.features.map((feature, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs">
+                  <Badge key={idx} variant="outline" className="text-xs text-white border-white/20">
                     {feature}
                   </Badge>
                 ))}
@@ -172,7 +172,7 @@ export function RagSettingsPage() {
                   className={
                     chunkingStrategy === 'semantic'
                       ? 'bg-purple-500/30 border-purple-500/50 text-white'
-                      : 'border-white/10 !text-white hover:bg-white/5 hover:!text-white'
+                      : 'border-white/10 !text-black hover:bg-white/5 hover:!text-black'
                   }
                   onClick={() => setChunkingStrategy('semantic')}
                 >
@@ -183,7 +183,7 @@ export function RagSettingsPage() {
                   className={
                     chunkingStrategy === 'fixed-size'
                       ? 'bg-purple-500/30 border-purple-500/50 text-white'
-                      : 'border-white/10 !text-white hover:bg-white/5 hover:!text-white'
+                      : 'border-white/10 !text-black hover:bg-white/5 hover:!text-black'
                   }
                   onClick={() => setChunkingStrategy('fixed-size')}
                 >
@@ -194,7 +194,7 @@ export function RagSettingsPage() {
                   className={
                     chunkingStrategy === 'recursive'
                       ? 'bg-purple-500/30 border-purple-500/50 text-white'
-                      : 'border-white/10 !text-white hover:bg-white/5 hover:!text-white'
+                      : 'border-white/10 !text-black hover:bg-white/5 hover:!text-black'
                   }
                   onClick={() => setChunkingStrategy('recursive')}
                 >
@@ -205,7 +205,7 @@ export function RagSettingsPage() {
                   className={
                     chunkingStrategy === 'sentence'
                       ? 'bg-purple-500/30 border-purple-500/50 text-white'
-                      : 'border-white/10 !text-white hover:bg-white/5 hover:!text-white'
+                      : 'border-white/10 !text-black hover:bg-white/5 hover:!text-black'
                   }
                   onClick={() => setChunkingStrategy('sentence')}
                 >

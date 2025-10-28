@@ -117,25 +117,25 @@ export function AgentCreateDialog({ open, onOpenChange, onSubmit }: AgentCreateD
           {step === 1 && (
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">에이전트 이름 *</Label>
+                <Label htmlFor="name" className="text-white">에이전트 이름 *</Label>
                 <Input
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="예: 고객 지원 봇"
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
                   autoFocus
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">설명 (선택)</Label>
+                <Label htmlFor="description" className="text-white">설명 (선택)</Label>
                 <Textarea
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="에이전트에 대한 간단한 설명"
-                  className="bg-white/5 border-white/10 text-white resize-none"
+                  className="bg-white/5 border-white/10 text-white placeholder:text-white/40 resize-none"
                   rows={3}
                 />
               </div>
@@ -191,7 +191,7 @@ export function AgentCreateDialog({ open, onOpenChange, onSubmit }: AgentCreateD
           {step === 3 && (
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="model">AI 모델</Label>
+                <Label htmlFor="model" className="text-white">AI 모델</Label>
                 <Select value={selectedModel} onValueChange={setSelectedModel}>
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
                     <SelectValue />

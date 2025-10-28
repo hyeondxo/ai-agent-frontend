@@ -24,12 +24,14 @@ import {
   Users,
   Activity,
   Download,
+  FileCode,
 } from 'lucide-react';
 import { useDeploymentConfig } from '@/hooks/useDeploymentConfig';
 
 export function DeploymentPage() {
   const [apiKeyCopied, setApiKeyCopied] = useState(false);
   const [embedCodeCopied, setEmbedCodeCopied] = useState(false);
+  const [pythonCodeCopied, setPythonCodeCopied] = useState(false);
 
   const {
     apiConfig,
@@ -37,16 +39,19 @@ export function DeploymentPage() {
   } = useDeploymentConfig();
 
   const { apiKey, apiEndpoint } = apiConfig;
-  const { webWidget: embedCode, curl: curlExample } = codeExamples;
+  const { webWidget: embedCode, curl: curlExample, pythonSDK: pythonCode } = codeExamples;
 
-  const handleCopy = (text: string, type: 'api' | 'embed') => {
+  const handleCopy = (text: string, type: 'api' | 'embed' | 'python') => {
     navigator.clipboard.writeText(text);
     if (type === 'api') {
       setApiKeyCopied(true);
       setTimeout(() => setApiKeyCopied(false), 2000);
-    } else {
+    } else if (type === 'embed') {
       setEmbedCodeCopied(true);
       setTimeout(() => setEmbedCodeCopied(false), 2000);
+    } else if (type === 'python') {
+      setPythonCodeCopied(true);
+      setTimeout(() => setPythonCodeCopied(false), 2000);
     }
   };
 
@@ -107,6 +112,10 @@ export function DeploymentPage() {
           <TabsTrigger value="widget" className="data-[state=active]:bg-purple-500/20">
             <Globe className="w-4 h-4 mr-2" />
             웹 위젯
+          </TabsTrigger>
+          <TabsTrigger value="python" className="data-[state=active]:bg-purple-500/20">
+            <FileCode className="w-4 h-4 mr-2" />
+            Python SDK
           </TabsTrigger>
         </TabsList>
 
@@ -186,7 +195,7 @@ export function DeploymentPage() {
               <h3 className="text-white">임베드 코드</h3>
             </div>
             <div className="relative">
-              <pre className="bg-black/30 border border-white/10 rounded-lg p-4 text-xs text-white/80 overflow-x-auto font-mono">
+              <pre className="bg-black/30 border border-white/10 rounded-lg p-4 text-xs text-white/80 overflow-x-auto font-mono max-h-96">
                 {embedCode}
               </pre>
               <Button
@@ -231,6 +240,78 @@ export function DeploymentPage() {
                   <option>우측 하단</option>
                   <option>좌측 하단</option>
                 </select>
+              </div>
+            </div>
+          </Card>
+        </TabsContent>
+
+        {/* Python SDK Tab */}
+        <TabsContent value="python" className="space-y-6 mt-6">
+          <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <FileCode className="w-5 h-5 text-blue-400" />
+              <h3 className="text-white">Python SDK 코드 예제</h3>
+            </div>
+            <div className="relative">
+              <pre className="bg-black/30 border border-white/10 rounded-lg p-4 text-xs text-white/80 overflow-x-auto font-mono max-h-96">
+                {pythonCode}
+              </pre>
+              <Button
+                onClick={() => handleCopy(pythonCode, 'python')}
+                size="sm"
+                className="absolute top-2 right-2 bg-white/10 hover:bg-white/20"
+              >
+                {pythonCodeCopied ? (
+                  <>
+                    <CheckCircle2 className="w-3 h-3 mr-1" />
+                    복사됨
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3 h-3 mr-1" />
+                    복사
+                  </>
+                )}
+              </Button>
+            </div>
+            <p className="text-xs text-white/60 mt-3">
+              먼저 <code className="bg-black/30 px-2 py-1 rounded">pip install aiagentlab</code> 명령으로 SDK를 설치하세요.
+            </p>
+          </Card>
+
+          <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Settings className="w-5 h-5 text-purple-400" />
+              <h3 className="text-white">Python SDK 기능</h3>
+            </div>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+                <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5" />
+                <div>
+                  <p className="text-white text-sm font-medium">대화 관리</p>
+                  <p className="text-white/60 text-xs">일반 모드와 스트리밍 모드 지원</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+                <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5" />
+                <div>
+                  <p className="text-white text-sm font-medium">파일 업로드</p>
+                  <p className="text-white/60 text-xs">PDF, 이미지 등 다양한 포맷 지원</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+                <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5" />
+                <div>
+                  <p className="text-white text-sm font-medium">배포 및 모니터링</p>
+                  <p className="text-white/60 text-xs">에이전트 배포 상태 확인 및 관리</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
+                <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5" />
+                <div>
+                  <p className="text-white text-sm font-medium">대화 기록</p>
+                  <p className="text-white/60 text-xs">과거 대화 내역 조회 및 분석</p>
+                </div>
               </div>
             </div>
           </Card>

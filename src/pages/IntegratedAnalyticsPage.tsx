@@ -279,14 +279,14 @@ export function IntegratedAnalyticsPage() {
               {agents.filter((a) => a.status === 'active').length}
             </p>
           </div>
-          <div className="bg-gray-500/10 border border-gray-500/20 rounded-lg p-4">
-            <p className="text-sm text-gray-400 mb-1">비활성</p>
+          <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
+            <p className="text-sm text-white mb-1">비활성</p>
             <p className="text-3xl font-bold text-white">
               {agents.filter((a) => a.status === 'inactive').length}
             </p>
           </div>
-          <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
-            <p className="text-sm text-orange-400 mb-1">보관됨</p>
+          <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
+            <p className="text-sm text-white mb-1">보관됨</p>
             <p className="text-3xl font-bold text-white">
               {agents.filter((a) => a.status === 'archived').length}
             </p>

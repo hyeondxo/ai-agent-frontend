@@ -156,10 +156,6 @@ export function AgentCard({ agent, onClick, onEdit, onDelete, onDuplicate }: Age
         </div>
       </div>
 
-      {/* Hover Indicator */}
-      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-        <span className="text-xs text-purple-400">자세히 보기 →</span>
-      </div>
     </Card>
   );
 }

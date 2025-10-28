@@ -52,7 +52,7 @@ export function UrlCrawlerTab({
                   하위 링크 자동 탐색 (최대 3단계)
                 </label>
               </div>
-              <Badge className="bg-gray-500/20 text-gray-400 text-xs">OFF (기본값)</Badge>
+              <Badge className="bg-gray-500/20 text-white text-xs">OFF (기본값)</Badge>
             </div>
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 flex-1">
@@ -61,7 +61,7 @@ export function UrlCrawlerTab({
                   이미지 설명 추출
                 </label>
               </div>
-              <Badge className="bg-gray-500/20 text-gray-400 text-xs">OFF (기본값)</Badge>
+              <Badge className="bg-gray-500/20 text-white text-xs">OFF (기본값)</Badge>
             </div>
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 flex-1">

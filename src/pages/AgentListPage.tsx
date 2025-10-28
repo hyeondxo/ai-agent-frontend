@@ -88,7 +88,7 @@ export function AgentListPage() {
         description="AI 에이전트를 생성하고 관리하세요"
         icon={<Boxes className="w-8 h-8 text-purple-400" />}
         actions={
-          <Button onClick={() => setCreateDialogOpen(true)} className="bg-purple-600 gap-2">
+          <Button disabled className="bg-purple-600/50 gap-2 cursor-not-allowed">
             <Plus className="w-4 h-4" />새 에이전트
           </Button>
         }
@@ -98,12 +98,11 @@ export function AgentListPage() {
       <div className="flex flex-col sm:flex-row gap-4">
         {/* Search */}
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
           <Input
             placeholder="에이전트 검색..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-white/5 border-white/10 text-white"
+            className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
           />
         </div>
 
@@ -113,16 +112,16 @@ export function AgentListPage() {
           onValueChange={(value: string) => setStatusFilter(value as AgentStatus | 'all')}
         >
           <TabsList className="bg-white/5">
-            <TabsTrigger value="all">
+            <TabsTrigger value="all" className="text-white/70 data-[state=active]:text-black">
               전체 <span className="ml-1.5 text-xs">({statusCounts.all})</span>
             </TabsTrigger>
-            <TabsTrigger value="active">
+            <TabsTrigger value="active" className="text-white/70 data-[state=active]:text-black">
               활성 <span className="ml-1.5 text-xs">({statusCounts.active})</span>
             </TabsTrigger>
-            <TabsTrigger value="inactive">
+            <TabsTrigger value="inactive" className="text-white/70 data-[state=active]:text-black">
               비활성 <span className="ml-1.5 text-xs">({statusCounts.inactive})</span>
             </TabsTrigger>
-            <TabsTrigger value="archived">
+            <TabsTrigger value="archived" className="text-white/70 data-[state=active]:text-black">
               보관 <span className="ml-1.5 text-xs">({statusCounts.archived})</span>
             </TabsTrigger>
           </TabsList>
@@ -141,7 +140,7 @@ export function AgentListPage() {
               : `${statusFilter === 'active' ? '활성' : statusFilter === 'inactive' ? '비활성' : '보관된'} 에이전트가 없습니다`}
           </h3>
           <p className="text-white/40 mb-6">새 에이전트를 생성해보세요</p>
-          <Button onClick={() => setCreateDialogOpen(true)} className="bg-purple-600 gap-2">
+          <Button disabled className="bg-purple-600/50 gap-2 cursor-not-allowed">
             <Plus className="w-4 h-4" />새 에이전트 생성
           </Button>
         </div>
@@ -160,18 +159,16 @@ export function AgentListPage() {
           {/* Add New Card */}
           {statusFilter === 'all' && !searchQuery && (
             <div
-              onClick={() => setCreateDialogOpen(true)}
               className="
-                bg-white/5 backdrop-blur-xl border-2 border-dashed border-white/20
+                bg-white/5 backdrop-blur-xl border-2 border-dashed border-white/10
                 rounded-xl p-6
-                hover:bg-white/10 hover:border-purple-500/50
-                transition-all duration-300 cursor-pointer
+                cursor-not-allowed opacity-50
                 flex flex-col items-center justify-center
                 min-h-[300px]
               "
             >
-              <div className="bg-purple-500/20 rounded-full p-4 mb-4">
-                <Plus className="w-8 h-8 text-purple-400" />
+              <div className="bg-purple-500/10 rounded-full p-4 mb-4">
+                <Plus className="w-8 h-8 text-purple-400/50" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">새 에이전트</h3>
               <p className="text-sm text-white/60 text-center">

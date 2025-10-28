@@ -10,6 +10,16 @@ import type { EmbeddingModelInfo, VectorDBInfo } from '@/types/rag';
  */
 export const embeddingModels: EmbeddingModelInfo[] = [
   {
+    id: 'sentence-transformers',
+    displayName: 'Sentence Transformers (paraphrase-multilingual)',
+    provider: 'Open Source',
+    description: '오픈소스 경량 모델. 로컬 실행 가능하여 비용이 들지 않습니다.',
+    dimensions: 768,
+    maxTokens: 512,
+    costPer1M: 0,
+    isRecommended: true,
+  },
+  {
     id: 'openai-large',
     displayName: 'OpenAI text-embedding-3-large',
     provider: 'OpenAI',
@@ -17,7 +27,6 @@ export const embeddingModels: EmbeddingModelInfo[] = [
     dimensions: 3072,
     maxTokens: 8191,
     costPer1M: 0,
-    isRecommended: true,
   },
   {
     id: 'openai-small',
@@ -36,15 +45,6 @@ export const embeddingModels: EmbeddingModelInfo[] = [
     dimensions: 1024,
     maxTokens: 512,
     costPer1M: 0.10,
-  },
-  {
-    id: 'sentence-transformers',
-    displayName: 'Sentence Transformers (paraphrase-multilingual)',
-    provider: 'Open Source',
-    description: '오픈소스 경량 모델. 로컬 실행 가능하여 비용이 들지 않습니다.',
-    dimensions: 768,
-    maxTokens: 512,
-    costPer1M: 0,
   },
   {
     id: 'voyage',
@@ -96,7 +96,7 @@ export const vectorDatabases: VectorDBInfo[] = [
  * 기본 RAG 설정
  */
 export const defaultRAGConfig = {
-  embeddingModel: 'openai-large' as const,
+  embeddingModel: 'sentence-transformers' as const,
   vectorDB: 'chromadb' as const,
   chunking: {
     strategy: 'semantic' as const,

@@ -7,6 +7,7 @@ import {
   Wand2,
   BarChart3,
   Rocket,
+  MessageSquare,
   type LucideIcon,
 } from 'lucide-react';
 import { ROUTES, type RouteValue } from './routes';
@@ -66,6 +67,11 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
     path: ROUTES.DEPLOYMENT,
     label: '배포',
     icon: Rocket,
+  },
+  {
+    path: ROUTES.PLAYGROUND,
+    label: 'Playground',
+    icon: MessageSquare,
   },
 ];
 
