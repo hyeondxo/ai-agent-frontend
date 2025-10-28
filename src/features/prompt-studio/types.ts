@@ -64,7 +64,7 @@ export interface TemplateSelectorProps {
  */
 export interface PromptHistoryProps {
   history: PromptHistoryItem[];
-  onSelectHistory?: (historyId: string) => void;
+  onSelectHistory?: (historyId: string | number) => void;
 }
 
 /**

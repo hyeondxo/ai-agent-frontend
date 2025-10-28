@@ -27,6 +27,15 @@ export interface ModelConfig {
 }
 
 /**
+ * Token usage breakdown
+ */
+export interface TokenUsage {
+  prompt: number;
+  completion: number;
+  total: number;
+}
+
+/**
  * Prompt history entry
  */
 export interface PromptHistory {
@@ -34,6 +43,14 @@ export interface PromptHistory {
   name: string;
   date: string;
   quality: number;
+  // Detailed information
+  timestamp: string;
+  fullPrompt: string;
+  output: string;
+  modelName: string;
+  responseTime: number; // in milliseconds
+  tokensUsed: TokenUsage;
+  cost: number; // in USD
 }
 
 /**
