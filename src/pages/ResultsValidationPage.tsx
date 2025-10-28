@@ -3,6 +3,7 @@
  * 결과 & 검증 - 리팩토링 완료
  */
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Download, Copy, TrendingUp } from 'lucide-react';
@@ -17,11 +18,20 @@ export function ResultsValidationPage() {
   // Use custom hook for data
   const {
     testResults,
+    topThreeTests,
     comparisonData,
     responseExamples,
     evaluationMetrics,
     winner,
   } = useTestResults();
+
+  // State for selected test (default to winner/first test)
+  const [selectedTestId, setSelectedTestId] = useState<string>(
+    testResults[0]?.id || ''
+  );
+
+  // Find selected test object
+  const selectedTest = testResults.find((test) => test.id === selectedTestId);
 
   return (
     <div className="p-8 space-y-6">
@@ -44,7 +54,8 @@ export function ResultsValidationPage() {
       {/* Test Results Comparison */}
       <TestResultCards
         testResults={testResults}
-        winnerIndex={1}
+        selectedTestId={selectedTestId}
+        onSelectTest={setSelectedTestId}
       />
 
       {/* Detailed Analysis */}
@@ -52,6 +63,8 @@ export function ResultsValidationPage() {
         comparisonData={comparisonData}
         responseExamples={responseExamples}
         evaluationMetrics={evaluationMetrics}
+        selectedTest={selectedTest}
+        topThreeTests={topThreeTests}
       />
 
       {/* Action Buttons */}

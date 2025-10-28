@@ -44,7 +44,19 @@ export interface DatabaseTabProps {
   tables: TableInfo[];
   selectedTables: string[];
   onToggleTable: (tableName: string) => void;
-  onConnect?: () => void;
+  isConnected: boolean;
+  isConnecting: boolean;
+  onConnect: (config: DatabaseConnectionForm) => void;
+}
+
+/**
+ * Database Connection Form
+ */
+export interface DatabaseConnectionForm {
+  type: 'postgresql' | 'mysql' | 'mongodb' | 'sqlite';
+  host: string;
+  username: string;
+  password: string;
 }
 
 /**

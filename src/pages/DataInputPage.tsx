@@ -20,7 +20,11 @@ import {
 export function DataInputPage() {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
   const [uploadProgress] = useState(0);
-  const [selectedTables, setSelectedTables] = useState<string[]>(['users', 'orders']);
+  const [selectedTables, setSelectedTables] = useState<string[]>([]);
+
+  // Database connection state
+  const [isDbConnected, setIsDbConnected] = useState(false);
+  const [isDbConnecting, setIsDbConnecting] = useState(false);
 
   // Use custom hook for data
   const { tables, documentPreview } = useDataInput();
@@ -36,6 +40,18 @@ export function DataInputPage() {
     },
     [selectedTables]
   );
+
+  // Handle database connection
+  const handleDatabaseConnect = useCallback((config: any) => {
+    setIsDbConnecting(true);
+
+    // Simulate connection delay
+    setTimeout(() => {
+      setIsDbConnecting(false);
+      setIsDbConnected(true);
+      console.log('Database connected with config:', config);
+    }, 1500);
+  }, []);
 
   return (
     <div className="p-8 space-y-6">
@@ -96,6 +112,9 @@ export function DataInputPage() {
             tables={tables}
             selectedTables={selectedTables}
             onToggleTable={handleToggleTable}
+            isConnected={isDbConnected}
+            isConnecting={isDbConnecting}
+            onConnect={handleDatabaseConnect}
           />
         </TabsContent>
       </Tabs>

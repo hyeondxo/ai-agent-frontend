@@ -43,9 +43,9 @@ export function WinnerCard({ winner, onShare, onUse }: WinnerCardProps) {
             <p className="text-white/80 mb-3">{winner.name}</p>
             <div className="flex gap-4">
               <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-green-400" />
+                <Target className="w-4 h-4 text-amber-400" />
                 <span className="text-white/80 text-sm">
-                  품질 점수: {winner.qualityScore}/100
+                  종합 점수: {winner.overallScore}/100
                 </span>
               </div>
               <div className="flex items-center gap-2">
