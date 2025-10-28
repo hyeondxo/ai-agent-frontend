@@ -120,7 +120,7 @@ export function DataInputPage() {
           <Button variant="outline" className="border-white/10">
             임시 저장
           </Button>
-          <Button className="bg-gradient-to-r from-purple-500 to-blue-500">
+          <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
             다음 단계
             <ChevronDown className="w-4 h-4 ml-2 rotate-[-90deg]" />
           </Button>

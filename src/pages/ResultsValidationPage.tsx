@@ -71,7 +71,7 @@ export function ResultsValidationPage() {
             <Copy className="w-4 h-4 mr-2" />
             결과 복사
           </Button>
-          <Button className="bg-gradient-to-r from-purple-500 to-blue-500">
+          <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
             배포하기
             <TrendingUp className="w-4 h-4 ml-2" />
           </Button>

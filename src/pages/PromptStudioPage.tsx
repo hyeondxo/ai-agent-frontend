@@ -100,7 +100,7 @@ export function PromptStudioPage() {
               <Button variant="outline" className="border-white/10">
                 A/B 테스트 설정
               </Button>
-              <Button className="bg-gradient-to-r from-purple-500 to-blue-500">
+              <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
                 <Play className="w-4 h-4 mr-2" />
                 테스트 실행
               </Button>
