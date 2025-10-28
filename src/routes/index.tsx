@@ -39,6 +39,11 @@ const PromptStudioPage = lazy(() =>
     default: module.PromptStudioPage,
   }))
 );
+const PromptHistoryDetailPage = lazy(() =>
+  import('@/pages/PromptHistoryDetailPage').then((module) => ({
+    default: module.PromptHistoryDetailPage,
+  }))
+);
 const ResultsValidationPage = lazy(() =>
   import('@/pages/ResultsValidationPage').then((module) => ({
     default: module.ResultsValidationPage,
@@ -134,6 +139,14 @@ export const router = createBrowserRouter([
         element: (
           <SuspenseWrapper>
             <PromptStudioPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: 'prompt-studio/history/:id',
+        element: (
+          <SuspenseWrapper>
+            <PromptHistoryDetailPage />
           </SuspenseWrapper>
         ),
       },

@@ -3,12 +3,18 @@
  * 프롬프트 히스토리 표시
  */
 
+import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { History } from 'lucide-react';
-import { PromptHistoryProps } from '../types';
+import type { PromptHistory as PromptHistoryType } from '@/types/prompt';
 
-export function PromptHistory({ history, onSelectHistory }: PromptHistoryProps) {
+interface PromptHistoryProps {
+  history: PromptHistoryType[];
+}
+
+export function PromptHistory({ history }: PromptHistoryProps) {
+  const navigate = useNavigate();
   return (
     <Card className="bg-white/5 backdrop-blur-xl border-white/10 p-6">
       <div className="flex items-center gap-2 mb-4">
@@ -19,7 +25,7 @@ export function PromptHistory({ history, onSelectHistory }: PromptHistoryProps) 
         {history.map((item) => (
           <div
             key={item.id}
-            onClick={() => onSelectHistory?.(item.id)}
+            onClick={() => navigate(`/prompt-studio/history/${item.id}`)}
             className="p-3 bg-white/5 rounded-lg border border-white/10 hover:border-white/20 transition-colors cursor-pointer"
           >
             <div className="flex items-center justify-between mb-1">
