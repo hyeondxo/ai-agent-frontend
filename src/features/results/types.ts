@@ -60,6 +60,7 @@ export interface WinnerCardProps {
     qualityScore: number;
     responseTime: number;
     cost: string;
+    promptTemplate?: string; // Full prompt template (for Collapsible display)
   };
   onShare?: () => void;
   onUse?: () => void;

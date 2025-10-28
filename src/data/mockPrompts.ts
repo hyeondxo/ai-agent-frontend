@@ -2,6 +2,7 @@ import type {
   PromptTemplate,
   ModelConfig,
   PromptHistory,
+  TestSetResult,
 } from '@/types/prompt';
 import { FileText, Sparkles, Wand2 } from 'lucide-react';
 
@@ -188,3 +189,132 @@ export const mockAdvancedSettings = {
   topP: 0.9,
   stopSequences: '',
 } as const;
+
+/**
+ * Mock test sets with execution results
+ * 테스트 세트 목록 (프롬프트 히스토리 대체)
+ */
+export const mockTestSets: TestSetResult[] = [
+  {
+    testSetId: 'TEST-01',
+    executedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    promptTemplate: mockTemplates[0].prompt, // Zero-shot
+    questions: [
+      { id: 'q1', value: '제품 배송이 지연되고 있습니다. 언제 받을 수 있나요?' },
+      { id: 'q2', value: '환불 정책이 어떻게 되나요?' },
+    ],
+    selectedModels: ['gpt-4'],
+    advancedSettings: {
+      temperature: 0.7,
+      maxTokens: 2000,
+      topP: 0.9,
+    },
+    results: [
+      {
+        modelId: 'gpt-4',
+        modelName: 'GPT-4',
+        qualityScore: 85,
+        speedScore: 78,
+        costScore: 70,
+        avgResponseTime: 1.8,
+        totalCost: 0.45,
+        userSatisfaction: 4.2,
+      },
+    ],
+  },
+  {
+    testSetId: 'TEST-02',
+    executedAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+    promptTemplate: mockTemplates[1].prompt, // Few-shot
+    questions: [
+      { id: 'q1', value: '제품 배송이 지연되고 있습니다. 언제 받을 수 있나요?' },
+      { id: 'q2', value: '환불 정책이 어떻게 되나요?' },
+      { id: 'q3', value: '제품의 보증 기간은 얼마나 되나요?' },
+    ],
+    selectedModels: ['gpt-4', 'claude-3'],
+    advancedSettings: {
+      temperature: 0.7,
+      maxTokens: 2000,
+      topP: 0.9,
+    },
+    results: [
+      {
+        modelId: 'gpt-4',
+        modelName: 'GPT-4',
+        qualityScore: 92,
+        speedScore: 75,
+        costScore: 68,
+        avgResponseTime: 2.1,
+        totalCost: 0.52,
+        userSatisfaction: 4.7,
+      },
+      {
+        modelId: 'claude-3',
+        modelName: 'Claude-3',
+        qualityScore: 88,
+        speedScore: 82,
+        costScore: 75,
+        avgResponseTime: 1.6,
+        totalCost: 0.38,
+        userSatisfaction: 4.5,
+      },
+    ],
+  },
+  {
+    testSetId: 'TEST-03',
+    executedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+    promptTemplate: mockTemplates[2].prompt, // Role-based
+    questions: [
+      { id: 'q1', value: 'VIP 고객의 배송 지연 문의' },
+      { id: 'q2', value: '프리미엄 멤버십 혜택 문의' },
+    ],
+    selectedModels: ['gpt-4', 'claude-3', 'gemini-pro', 'llama-2'],
+    advancedSettings: {
+      temperature: 0.8,
+      maxTokens: 2500,
+      topP: 0.95,
+    },
+    results: [
+      {
+        modelId: 'gpt-4',
+        modelName: 'GPT-4',
+        qualityScore: 94,
+        speedScore: 73,
+        costScore: 65,
+        avgResponseTime: 2.3,
+        totalCost: 0.58,
+        userSatisfaction: 4.8,
+      },
+      {
+        modelId: 'claude-3',
+        modelName: 'Claude-3',
+        qualityScore: 90,
+        speedScore: 80,
+        costScore: 72,
+        avgResponseTime: 1.7,
+        totalCost: 0.42,
+        userSatisfaction: 4.6,
+      },
+      {
+        modelId: 'gemini-pro',
+        modelName: 'Gemini Pro',
+        qualityScore: 87,
+        speedScore: 85,
+        costScore: 78,
+        avgResponseTime: 1.4,
+        totalCost: 0.35,
+        userSatisfaction: 4.4,
+      },
+      {
+        modelId: 'llama-2',
+        modelName: 'Llama-2',
+        qualityScore: 80,
+        speedScore: 90,
+        costScore: 88,
+        avgResponseTime: 1.1,
+        totalCost: 0.18,
+        userSatisfaction: 4.0,
+      },
+    ],
+  },
+];

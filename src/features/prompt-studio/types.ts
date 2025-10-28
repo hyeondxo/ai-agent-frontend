@@ -44,8 +44,8 @@ export interface AIModel {
  */
 export interface AdvancedSettings {
   temperature: number;
-  maxTokens: number;
-  topP: number;
+  maxTokens?: number;
+  topP?: number;
   stopSequences?: string[];
 }
 
@@ -73,8 +73,10 @@ export interface PromptHistoryProps {
 export interface PromptEditorProps {
   selectedTemplate: string | null;
   templates: PromptTemplate[];
-  onCopy?: () => void;
-  onSave?: () => void;
+  promptText: string;
+  questions: TestQuestion[];
+  onPromptTextChange: (text: string) => void;
+  onQuestionsChange: (questions: TestQuestion[]) => void;
 }
 
 /**
@@ -94,4 +96,34 @@ export interface AdvancedSettingsProps {
   onOpenChange: (open: boolean) => void;
   temperature: number[];
   onTemperatureChange: (value: number[]) => void;
+}
+
+/**
+ * 테스트 질문 인터페이스
+ */
+export interface TestQuestion {
+  id: string;
+  value: string;
+}
+
+/**
+ * 프롬프트 생성 세트 (독립적인 설정 그룹)
+ */
+export interface PromptSet {
+  id: string;
+  templateId: string | null;
+  promptText: string;
+  questions: TestQuestion[];
+  selectedModels: string[];
+  advancedSettings: AdvancedSettings;
+  isAdvancedOpen: boolean;
+}
+
+/**
+ * PromptSetPagination 컴포넌트 Props
+ */
+export interface PromptSetPaginationProps {
+  totalSets: number;
+  activeIndex: number;
+  onSetChange: (index: number) => void;
 }

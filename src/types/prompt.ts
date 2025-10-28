@@ -63,3 +63,30 @@ export interface AdvancedSettings {
   frequencyPenalty?: number;
   presencePenalty?: number;
 }
+
+/**
+ * Test set execution result for a specific model
+ */
+export interface TestSetExecutionResult {
+  modelId: string;
+  modelName: string;
+  qualityScore: number;
+  speedScore: number;
+  costScore: number;
+  avgResponseTime: number;
+  totalCost: number;
+  userSatisfaction: number;
+}
+
+/**
+ * Complete test set configuration and results
+ */
+export interface TestSetResult {
+  testSetId: string; // Format: TEST-01, TEST-02, ...
+  executedAt: string; // ISO timestamp
+  promptTemplate: string; // Full prompt text
+  questions: Array<{ id: string; value: string }>; // Test questions
+  selectedModels: string[]; // Model IDs
+  advancedSettings: AdvancedSettings; // Settings used
+  results: TestSetExecutionResult[]; // Results for each model
+}

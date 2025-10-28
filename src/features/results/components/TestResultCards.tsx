@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Award } from 'lucide-react';
+import { formatTestResultTitle } from '@/utils';
 import { TestResultCardsProps } from '../types';
 
 export function TestResultCards({
@@ -24,7 +25,11 @@ export function TestResultCards({
         >
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h4 className="text-white mb-1">{result.prompt}</h4>
+              <h4 className="text-white mb-1">
+                {result.testSetId
+                  ? formatTestResultTitle(result.testSetId, result.model)
+                  : result.prompt}
+              </h4>
               <Badge variant="secondary" className="text-xs">
                 {result.model}
               </Badge>

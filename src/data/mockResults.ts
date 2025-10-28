@@ -6,13 +6,42 @@ import type {
 } from '@/types/results';
 
 /**
+ * Mock prompt template for test results
+ */
+const zeroShotPromptTemplate = `당신은 전문적인 AI 어시스턴트입니다. 주어진 문서를 바탕으로 사용자의 질문에 정확하고 도움이 되는 답변을 제공하세요.
+
+{context}
+
+질문: {question}
+
+답변:`;
+
+const fewShotPromptTemplate = `당신은 전문적인 AI 어시스턴트입니다. 다음 예시를 참고하여 답변하세요.
+
+예시 1:
+질문: 제품 A의 가격은?
+답변: 제품 A의 가격은 $99입니다.
+
+예시 2:
+질문: 배송은 얼마나 걸리나요?
+답변: 일반 배송은 3-5 영업일이 소요됩니다.
+
+{context}
+
+질문: {question}
+
+답변:`;
+
+/**
  * Mock A/B test results
  */
 export const mockTestResults: TestResult[] = [
   {
     id: 'test-1',
-    prompt: '고객 지원 v1 (Zero-shot)',
+    prompt: 'TEST-01-GPT-4',
     model: 'GPT-4',
+    testSetId: 'TEST-01',
+    promptTemplate: zeroShotPromptTemplate,
     qualityScore: 85,
     speedScore: 78,
     costScore: 70,
@@ -22,8 +51,10 @@ export const mockTestResults: TestResult[] = [
   },
   {
     id: 'test-2',
-    prompt: '고객 지원 v2 (Few-shot)',
+    prompt: 'TEST-02-GPT-4',
     model: 'GPT-4',
+    testSetId: 'TEST-02',
+    promptTemplate: fewShotPromptTemplate,
     qualityScore: 92,
     speedScore: 75,
     costScore: 68,
@@ -33,8 +64,10 @@ export const mockTestResults: TestResult[] = [
   },
   {
     id: 'test-3',
-    prompt: '고객 지원 v2 (Few-shot)',
+    prompt: 'TEST-02-Claude-3',
     model: 'Claude-3',
+    testSetId: 'TEST-02',
+    promptTemplate: fewShotPromptTemplate,
     qualityScore: 88,
     speedScore: 82,
     costScore: 75,
@@ -90,10 +123,11 @@ export const mockEvaluationMetrics: ValidationMetrics[] = [
  * Mock winner configuration (best performing combination)
  */
 export const mockWinner = {
-  name: '고객 지원 v2 (Few-shot) + GPT-4',
+  name: 'TEST-02-GPT-4 (Few-shot)',
   qualityScore: 92,
   responseTime: 2.1,
-  cost: 0.52,
+  cost: '$0.52',
+  promptTemplate: fewShotPromptTemplate,
 } as const;
 
 /**

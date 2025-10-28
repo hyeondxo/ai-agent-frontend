@@ -7,3 +7,6 @@ export { PromptHistory } from './PromptHistory';
 export { PromptEditor } from './PromptEditor';
 export { ModelSelector } from './ModelSelector';
 export { AdvancedSettings } from './AdvancedSettings';
+export { PromptSetPagination } from './PromptSetPagination';
+export { TestSetList } from './TestSetList';
+export { TestSetResultsPanel } from './TestSetResultsPanel';
