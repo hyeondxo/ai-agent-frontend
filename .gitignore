@@ -1,3 +1,4 @@
 node_modules
 plans/
 .git.backup_*
+.vercel
