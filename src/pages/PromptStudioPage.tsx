@@ -4,9 +4,11 @@
  */
 
 import { useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Play, Plus } from 'lucide-react';
+import { ROUTES } from '@/constants';
 import { usePromptTemplates } from '@/features/prompt-studio/hooks/usePromptTemplates';
 import {
   TemplateSelector,
@@ -21,6 +23,7 @@ import type { TestSetResult } from '@/types/prompt';
 import { mockTestSets } from '@/data/mockPrompts';
 
 export function PromptStudioPage() {
+  const navigate = useNavigate();
   // Use custom hook for data
   const { templates, models } = usePromptTemplates();
 
@@ -243,7 +246,10 @@ export function PromptStudioPage() {
                 <Plus className="w-4 h-4 mr-2" />
                 테스트 추가
               </Button>
-              <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+              <Button
+                className="bg-gradient-to-r from-purple-500 to-blue-500 text-white"
+                onClick={() => navigate(ROUTES.RESULTS)}
+              >
                 <Play className="w-4 h-4 mr-2" />
                 테스트 실행
               </Button>

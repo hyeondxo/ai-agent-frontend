@@ -4,11 +4,13 @@
  */
 
 import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FileText, Globe, Database, Upload, X, ChevronDown } from 'lucide-react';
 import { useDataInput } from '@/features/data-input/hooks/useDataInput';
+import { ROUTES } from '@/constants';
 import {
   TextInputTab,
   UrlCrawlerTab,
@@ -18,6 +20,7 @@ import {
 } from '@/features/data-input/components';
 
 export function DataInputPage() {
+  const navigate = useNavigate();
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
   const [uploadProgress] = useState(0);
   const [selectedTables, setSelectedTables] = useState<string[]>([]);
@@ -132,7 +135,10 @@ export function DataInputPage() {
           <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
             임시 저장
           </Button>
-          <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+          <Button
+            className="bg-gradient-to-r from-purple-500 to-blue-500 text-white"
+            onClick={() => navigate(ROUTES.RAG_SETTINGS)}
+          >
             다음 단계
             <ChevronDown className="w-4 h-4 ml-2 rotate-[-90deg]" />
           </Button>

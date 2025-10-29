@@ -4,8 +4,10 @@
  */
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { ROUTES } from '@/constants';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -16,6 +18,7 @@ import { embeddingModels, vectorDatabases, defaultRAGConfig } from '@/data/mockR
 import type { EmbeddingModel, VectorDB, ChunkingStrategy } from '@/types/rag';
 
 export function RagSettingsPage() {
+  const navigate = useNavigate();
   const [selectedEmbedding, setSelectedEmbedding] = useState<EmbeddingModel>(
     defaultRAGConfig.embeddingModel
   );
@@ -352,14 +355,21 @@ export function RagSettingsPage() {
 
       {/* Action Buttons */}
       <div className="flex items-center justify-between">
-        <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
+        <Button
+          variant="outline"
+          className="border-white/10 !text-white hover:!text-white"
+          onClick={() => navigate(ROUTES.DATA_INPUT)}
+        >
           이전 단계
         </Button>
         <div className="flex gap-3">
           <Button variant="outline" className="border-white/10 !text-white hover:!text-white">
             임시 저장
           </Button>
-          <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+          <Button
+            className="bg-gradient-to-r from-purple-500 to-blue-500 text-white"
+            onClick={() => navigate(ROUTES.PROMPT_STUDIO)}
+          >
             다음 단계
             <ChevronRight className="w-4 h-4 ml-2" />
           </Button>

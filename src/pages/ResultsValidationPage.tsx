@@ -4,9 +4,11 @@
  */
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Download, Copy, TrendingUp } from 'lucide-react';
+import { ROUTES } from '@/constants';
 import { useTestResults } from '@/features/results/hooks/useTestResults';
 import {
   WinnerCard,
@@ -15,6 +17,7 @@ import {
 } from '@/features/results/components';
 
 export function ResultsValidationPage() {
+  const navigate = useNavigate();
   // Use custom hook for data
   const {
     testResults,
@@ -78,7 +81,10 @@ export function ResultsValidationPage() {
             <Copy className="w-4 h-4 mr-2" />
             결과 복사
           </Button>
-          <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+          <Button
+            className="bg-gradient-to-r from-purple-500 to-blue-500 text-white"
+            onClick={() => navigate(ROUTES.DEPLOYMENT)}
+          >
             배포하기
             <TrendingUp className="w-4 h-4 ml-2" />
           </Button>
